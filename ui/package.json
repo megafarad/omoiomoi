@@ -1,0 +1,47 @@
+{
+  "name": "omoiomoi-transcripts",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "rimraf ../public && react-scripts build && ncp build ../public && rimraf build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "private": true,
+  "dependencies": {
+    "@auth0/auth0-react": "^2.0.1",
+    "@reduxjs/toolkit": "^1.9.5",
+    "bootstrap": "^5.2.3",
+    "kleur": "^4.1.5",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.3",
+    "react-datepicker": "^4.11.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.1",
+    "react-scripts": "^5.0.1",
+    "react-spinners": "^0.13.8",
+    "redux": "^4.2.1"
+  },
+  "devDependencies": {
+    "ncp": "^2.0.0",
+    "prettier": "^2.8.5",
+    "rimraf": "^4.1.3"
+  },
+  "proxy": "http://localhost:9000",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "packageManager": "yarn@1.22.18"
+}
