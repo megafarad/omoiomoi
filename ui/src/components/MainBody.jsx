@@ -8,7 +8,6 @@ import FilterBar from "./FilterBar";
 import {FadeLoader} from "react-spinners";
 import PageBar from "./PageBar";
 import SearchList from "./SearchList";
-import {Container} from "react-bootstrap";
 
 const MainBody = () => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -16,11 +15,11 @@ const MainBody = () => {
 
   return (
     isAuthenticated  && (
-      <Container>
+      <>
         <FilterBar />
         { isLoading ? <FadeLoader/> : searchText.length > 0 ? <SearchList /> : <MeetingList /> }
         <PageBar />
-      </Container>
+      </>
     )
   );
 };
