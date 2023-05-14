@@ -5,11 +5,11 @@ export function commonRequestParameters(pageNumber, pageSize, fromDate, toDate) 
   }).toString()
 
   const searchParamsWithFromDate = fromDate ? searchParamsWithPage + '&' + new URLSearchParams({
-    fromDate: fromDate
+    fromDate: fromDate.slice(0, 10)
   }) : searchParamsWithPage
 
   const searchParamsWithToDate = toDate ? searchParamsWithFromDate + '&' + new URLSearchParams({
-    toDate: toDate
+    toDate: toDate.slice(0, 10)
   }) : searchParamsWithFromDate
 
   return (fromDate || toDate) ? searchParamsWithToDate + '&' + new URLSearchParams({

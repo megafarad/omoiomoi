@@ -12,20 +12,32 @@ const MeetingEventCard = (props) => {
     case 'JOIN':
       return (
         <Card>
-          <Card.Body><b>{props.meetingEvent.participant.name}</b> joined the meeting</Card.Body>
+          <Card.Body>
+            <img className='meeting-event-avtar' src={props.meetingEvent.participant.avatar_url} alt='' width='50'
+                 height='50'/>
+            <b>{props.meetingEvent.participant.name}</b> joined the meeting
+          </Card.Body>
         </Card>
       );
     case 'SPEECH':
       const transcript = props.meetingEvent.transcript[0].text;
       return (
         <Card>
-          <Card.Body><b>{props.meetingEvent.participant.name}</b>: {transcript}</Card.Body>
+          <Card.Body>
+            <img className='meeting-event-avtar' src={props.meetingEvent.participant.avatar_url} alt='' width='50'
+                 height='50'/>
+            <b>{props.meetingEvent.participant.name}</b>: {transcript}
+          </Card.Body>
         </Card>
       );
     case 'LEAVE':
       return (
         <Card>
-          <Card.Body><b>{props.meetingEvent.participant.name}</b> left the meeting</Card.Body>
+          <Card.Body>
+            <img className='meeting-event-avtar' src={props.meetingEvent.participant.avatar_url} alt='' width='50'
+                 height='50'/>
+            <b>{props.meetingEvent.participant.name}</b> left the meeting
+          </Card.Body>
         </Card>
       );
     case 'END':
@@ -43,4 +55,4 @@ const MeetingEventCard = (props) => {
   }
 };
 
-export default MeetingEventCard
+export default MeetingEventCard;

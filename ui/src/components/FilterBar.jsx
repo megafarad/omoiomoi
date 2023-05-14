@@ -20,10 +20,10 @@ const FilterBar = () => {
         <Form>
           <Row>
             <Col md={2}>From: <DatePicker selected={fromDate ? new Date(fromDate) : null}
-                                          onChange={(date) => dispatch(setFromDate(date.toISOString().slice(0, 10)))}/>
+                                          onChange={(date) => dispatch(setFromDate(date.toISOString()))}/>
             </Col>
             <Col md={2}>To: <DatePicker selected={toDate ? new Date(toDate) : null}
-                                        onChange={(date) => dispatch(setToDate(date.toISOString().slice(0, 10)))}/>
+                                        onChange={(date) => dispatch(setToDate(date.toISOString()))}/>
             </Col>
             <Col md={8}>Search: <Form.Control placeholder='Search...' onChange={onSearchChange}/></Col>
           </Row>
