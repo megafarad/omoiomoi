@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import useGetToken from "../hooks/useGetToken";
 import {FadeLoader} from "react-spinners";
-import MeetingEventCard from "./MeetingEventCard";
 import {setIsSearchLoading, setSearchPage} from "../redux/searchSlice";
 import commonRequestParameters from "../app/commonRequestParameters";
-import {Container} from "react-bootstrap";
+import {Table} from "react-bootstrap";
+import SearchResult from "./SearchResult";
 
 const SearchList = () => {
   const dispatch = useDispatch();
@@ -53,13 +53,29 @@ const SearchList = () => {
     }
   }, [dispatch, accessToken, fromDate, toDate, query, searchPageNumber]);
   return (isLoading || !searchPage) ? <FadeLoader/> :
-    <>
-      <Container>
-      { searchPage.items.map((searchResult, idx) =>
-        <MeetingEventCard key={idx} meetingEvent={searchResult.meeting_event}/>
-      )}
-      </Container>
-    </>
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>
+            Avatar
+          </th>
+          <th>
+            Participant Name
+          </th>
+          <th>
+            Transcript
+          </th>
+          <th>
+            Go to meeting
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        { searchPage.items.map((searchResult, idx) =>
+          <SearchResult key={idx} meetingEvent={searchResult.meeting_event} meetingId={searchResult.meeting_id}/>
+        )}
+      </tbody>
+    </Table>
 };
 
 export default SearchList;

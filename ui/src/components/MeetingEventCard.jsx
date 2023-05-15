@@ -1,5 +1,5 @@
-import React from "react";
-import {Card} from "react-bootstrap";
+import React from 'react';
+import {Card} from 'react-bootstrap';
 
 const MeetingEventCard = (props) => {
   const time = new Date(props.meetingEvent.timestamp);
@@ -26,7 +26,9 @@ const MeetingEventCard = (props) => {
           <Card.Body>
             <img className='meeting-event-avtar' src={props.meetingEvent.participant.avatar_url} alt='' width='50'
                  height='50'/>
-            <b>{props.meetingEvent.participant.name}</b>: {transcript}
+            <span>
+              <b>{props.meetingEvent.participant.name}</b>: {transcript}
+            </span>
           </Card.Body>
         </Card>
       );

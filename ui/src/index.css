@@ -284,3 +284,8 @@ i {
 .meeting-event-avtar {
   margin-right: 20px;
 }
+
+.go-to-mtg-td {
+  text-align: center;
+  vertical-align: middle;
+}

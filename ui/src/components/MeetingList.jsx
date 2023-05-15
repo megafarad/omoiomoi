@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
-import Accordion from 'react-bootstrap/Accordion';
-import MeetingEventCard from './MeetingEventCard';
 import {useDispatch, useSelector} from 'react-redux';
 import commonRequestParameters from '../app/commonRequestParameters';
-import {FadeLoader} from "react-spinners";
+import {FadeLoader} from 'react-spinners';
 import useGetToken from "../hooks/useGetToken";
 import {setAreMeetingsLoading, setMeetingPage} from "../redux/meetingsSlice";
-import {Container} from "react-bootstrap";
+import {Table} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {BsFillArrowRightCircleFill} from 'react-icons/bs';
 
 const MeetingList = () => {
   const dispatch = useDispatch();
@@ -51,21 +51,41 @@ const MeetingList = () => {
   }, [dispatch, fromDate, toDate, meetingsPageNumber, accessToken]);
 
 
-  return (isLoading || !meetingsPage) ? <FadeLoader/> : <Container>
-    <Accordion defaultActiveKey="0">
-      {meetingsPage.items.map((currentMeeting, idx) =>
-        <Accordion.Item eventKey={idx} key={idx}>
-          <Accordion.Header><i>{currentMeeting.room_name}</i>&nbsp;at&nbsp;
+  return (isLoading || !meetingsPage) ? <FadeLoader/> :
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>
+            Room
+          </th>
+          <th>
+            Date
+          </th>
+          <th>
+            Go to meeting
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      { meetingsPage.items.map((meeting, idx) =>
+        <tr key={idx}>
+          <td>
+            {meeting.room_name}
+          </td>
+          <td>
             {Intl.DateTimeFormat(navigator.language, {weekday: 'long', month: 'short',
-              day: 'numeric', year: 'numeric', hour: 'numeric', hour12: true, minute: 'numeric'}).format(
-              new Date(currentMeeting.start_time))}
-          </Accordion.Header>
-          <Accordion.Body>{currentMeeting.events.map((currentEvent,evtIdx) =>
-            <MeetingEventCard key={evtIdx} meetingEvent={currentEvent}/>)}
-          </Accordion.Body>
-        </Accordion.Item>)}
-    </Accordion>
-  </Container>
+            day: 'numeric', year: 'numeric', hour: 'numeric', hour12: true, minute: 'numeric'}).format(
+            new Date(meeting.start_time))}
+          </td>
+          <td className='go-to-mtg-td'>
+            <Link to={`/meetings/${meeting.id}`}><BsFillArrowRightCircleFill/></Link>
+          </td>
+        </tr>
+      )
+
+      }
+      </tbody>
+    </Table>
 };
 
 export default MeetingList;
