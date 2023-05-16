@@ -1,11 +1,23 @@
+import com.typesafe.sbt.packager.docker.DockerChmodType
+
 ThisBuild / scalaVersion := "2.13.10"
 
-ThisBuild / version := "1.0-SNAPSHOT"
+ThisBuild / version := "0.1.0-SNAPSHOT"
+
+Docker / daemonUserUid  := None
+Docker / daemonUser := "daemon"
+
+Universal / javaOptions ++= Seq(
+    "-Dpidfile.path=/dev/null"
+)
 
 lazy val root = (project in file("."))
-  .enablePlugins(PlayScala)
+  .enablePlugins(PlayScala, AshScriptPlugin)
   .settings(
     name := """omoiomoi""",
+    dockerExposedPorts += 9000,
+    dockerBaseImage := "openjdk:8-jre-alpine",
+    dockerChmodType := DockerChmodType.UserGroupWriteExecute,
     libraryDependencies ++= Seq(
       guice,
       ws,
