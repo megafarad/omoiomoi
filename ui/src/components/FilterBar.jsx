@@ -10,6 +10,8 @@ const FilterBar = () => {
   const dispatch = useDispatch();
   const fromDate = useSelector((state) => state.dateRange.fromDate);
   const toDate = useSelector((state) => state.dateRange.toDate);
+  const search = useSelector((state) => state.search.query);
+
   const onSearchChange = (e) => {
     e.preventDefault();
     dispatch(setSearchQuery(e.target.value));
@@ -27,7 +29,7 @@ const FilterBar = () => {
                                         onChange={(date) => date ?
                                           dispatch(setToDate(date.toISOString())) : dispatch(setToDate(null))}/>
             </Col>
-            <Col md={8}>Search: <Form.Control placeholder='Search...' onChange={onSearchChange}/></Col>
+            <Col md={8}>Search: <Form.Control placeholder='Search...' onChange={onSearchChange} value={search}/></Col>
           </Row>
         </Form>
       </Card.Body>
