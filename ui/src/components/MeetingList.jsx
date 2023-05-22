@@ -2,11 +2,12 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import commonRequestParameters from '../app/commonRequestParameters';
 import {FadeLoader} from 'react-spinners';
-import useGetToken from "../hooks/useGetToken";
-import {setAreMeetingsLoading, setMeetingPage} from "../redux/meetingsSlice";
+import useGetToken from '../hooks/useGetToken';
+import {setAreMeetingsLoading, setMeetingPage} from '../redux/meetingsSlice';
 import {Table} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {BsFillArrowRightCircleFill} from 'react-icons/bs';
+import MeetingRoomName from './MeetingRoomName';
 
 const MeetingList = () => {
   const dispatch = useDispatch();
@@ -67,10 +68,10 @@ const MeetingList = () => {
         </tr>
       </thead>
       <tbody>
-      { meetingsPage.items.map((meeting, idx) =>
+      { meetingsPage.items.length === 0 ? <tr><td colSpan={3}><i>No meetings</i></td></tr> : meetingsPage.items.map((meeting, idx) =>
         <tr key={idx}>
           <td>
-            {meeting.room_name}
+            <MeetingRoomName roomName={meeting.room_name}/>
           </td>
           <td>
             {Intl.DateTimeFormat(navigator.language, {weekday: 'long', month: 'short',
@@ -82,7 +83,6 @@ const MeetingList = () => {
           </td>
         </tr>
       )
-
       }
       </tbody>
     </Table>

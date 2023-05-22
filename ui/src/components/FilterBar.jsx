@@ -15,7 +15,8 @@ const FilterBar = () => {
   const onSearchChange = (e) => {
     e.preventDefault();
     dispatch(setSearchQuery(e.target.value));
-  }
+  };
+
   return(
     <Card>
       <Card.Body>

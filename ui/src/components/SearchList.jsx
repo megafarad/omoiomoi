@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import useGetToken from "../hooks/useGetToken";
-import {FadeLoader} from "react-spinners";
-import {setIsSearchLoading, setSearchPage} from "../redux/searchSlice";
-import commonRequestParameters from "../app/commonRequestParameters";
-import {Table} from "react-bootstrap";
-import SearchResult from "./SearchResult";
+import useGetToken from '../hooks/useGetToken';
+import {FadeLoader} from 'react-spinners';
+import {setIsSearchLoading, setSearchPage} from '../redux/searchSlice';
+import commonRequestParameters from '../app/commonRequestParameters';
+import {Table} from 'react-bootstrap';
+import SearchResult from './SearchResult';
 
 const SearchList = () => {
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ const SearchList = () => {
         </tr>
       </thead>
       <tbody>
-        { searchPage.items.map((searchResult, idx) =>
+        { searchPage.items.length === 0 ? <tr><td colSpan={4}><i>No results found</i></td></tr> : searchPage.items.map((searchResult, idx) =>
           <SearchResult key={idx} meetingEvent={searchResult.meeting_event} meetingId={searchResult.meeting_id}/>
         )}
       </tbody>
