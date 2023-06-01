@@ -34,5 +34,3 @@ CREATE TABLE IF NOT EXISTS Meeting_Event (
     foreign key(participant_record_id)
         references Meeting_Participant(id)
 );
-
--- !Downs
