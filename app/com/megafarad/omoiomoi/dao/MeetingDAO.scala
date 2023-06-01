@@ -7,7 +7,6 @@ import play.api.libs.json.Json
 import slick.jdbc.JdbcProfile
 
 import java.time.{Instant, LocalDate, LocalTime, ZoneId, ZonedDateTime}
-import java.time.temporal.TemporalAccessor
 import java.util.UUID
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}

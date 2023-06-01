@@ -37,6 +37,6 @@ CREATE TABLE Meeting_Event (
 
 -- !Downs
 
+DROP TABLE Meeting_Event CASCADE;
 DROP TABLE Meeting_Participant;
-DROP TABLE Meeting_Event;
 DROP TABLE Meeting;

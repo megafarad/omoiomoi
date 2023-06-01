@@ -1,13 +1,12 @@
 package com.megafarad.omoiomoi.binders
 
-import play.api.Logging
 import play.api.mvc.QueryStringBindable
 
 import java.time.format.DateTimeParseException
 import java.time.zone.ZoneRulesException
 import java.time.{LocalDate, ZoneId}
 
-object CustomBinders extends Logging {
+object CustomBinders {
   implicit def localDateBinder(implicit stringBinder: QueryStringBindable[String]): QueryStringBindable[LocalDate] = new QueryStringBindable[LocalDate] {
     override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, LocalDate]] = {
       params.get(key).map {
