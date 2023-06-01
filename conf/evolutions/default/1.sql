@@ -2,7 +2,7 @@
 
 -- !Ups
 
-CREATE TABLE Meeting (
+CREATE TABLE IF NOT EXISTS Meeting (
     id uuid not null,
     room_name varchar(255) not null,
     start_time timestamp not null,
@@ -10,7 +10,7 @@ CREATE TABLE Meeting (
     primary key (id)
 );
 
-CREATE TABLE Meeting_Participant (
+CREATE TABLE IF NOT EXISTS Meeting_Participant (
     id varchar(8) not null,
     name varchar(255) not null,
     email varchar(255),
@@ -18,7 +18,7 @@ CREATE TABLE Meeting_Participant (
     primary key (id)
 );
 
-CREATE TABLE Meeting_Event (
+CREATE TABLE IF NOT EXISTS Meeting_Event (
   id uuid not null,
   record_type varchar(10) not null,
   meeting_record_id uuid not null,
@@ -36,7 +36,3 @@ CREATE TABLE Meeting_Event (
 );
 
 -- !Downs
-
-DROP TABLE Meeting_Event CASCADE;
-DROP TABLE Meeting_Participant;
-DROP TABLE Meeting;
