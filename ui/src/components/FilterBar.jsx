@@ -2,8 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Col, Form, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-import {setFromDate, setToDate} from "../redux/dateRangeSlice";
-import {setSearchQuery} from "../redux/searchSlice";
+import {setFromDate, setToDate} from '../redux/dateRangeSlice';
+import {setSearchQuery} from '../redux/searchSlice';
+import 'react-datepicker/dist/react-datepicker.min.css';
 
 
 const FilterBar = () => {
