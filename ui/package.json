@@ -1,7 +1,7 @@
 {
   "name": "omoiomoi-transcripts",
   "version": "1.0.0",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "react-scripts start",
     "build": "rimraf ../public && react-scripts build && ncp build ../public && rimraf build",

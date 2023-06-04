@@ -29,8 +29,10 @@ const Main = () => {
     return (
       <Container className='login'>
         <GiBrainDump size={70}/>
-        <div>To see transcripts, log in with email you provided to Jitsi Meet</div>
-        <LoginButton/>
+        { isLoading ? <FadeLoader/> : <>
+          <div>To see transcripts, log in with email you provided to Jitsi Meet</div>
+          <LoginButton/>
+        </>}
       </Container>
     );
   }
