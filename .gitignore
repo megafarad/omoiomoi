@@ -3,3 +3,10 @@ target
 /.idea
 /logs
 /RUNNING_PID
+/public/static/css/main.*.css
+/public/static/css/main.*.css.map
+/public/static/js/main.*.js
+/public/static/js/main.*.js.map
+/public/static/js/main.*.js.LICENSE.txt
+/public/index.html
+/public/asset-manifest.json
