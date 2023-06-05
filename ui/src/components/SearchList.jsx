@@ -30,7 +30,7 @@ const SearchList = () => {
       }));
     }
   }, [dispatch, accessToken, fromDate, toDate, query, searchPageNumber]);
-  return (isLoading || !searchPage) ? <FadeLoader/> :
+  return (isLoading) ? <FadeLoader/> :
     <Table striped bordered hover>
       <thead>
         <tr>
