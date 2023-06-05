@@ -12,9 +12,10 @@ const SearchList = () => {
   const searchPage = useSelector((state) => state.search.page);
   const query = useSelector((state) => state.search.query);
   const searchPageNumber = useSelector((state) => state.search.pageNumber);
-  const isLoading = useSelector((state) => state.search.isLoading);
   const fromDate = useSelector((state) => state.dateRange.fromDate);
   const toDate = useSelector((state) => state.dateRange.toDate);
+  const isLoading = useSelector((state) => state.search.isLoading);
+  const error = useSelector((state) => state.search.error);
   const pageSize = 10;
 
   useEffect(() => {
@@ -48,10 +49,11 @@ const SearchList = () => {
         </tr>
       </thead>
       <tbody>
-        { searchPage.items.length === 0 ? <tr><td colSpan={4}><i>No results found</i></td></tr> : searchPage.items.map((searchResult, idx) =>
+      </tbody>
+      { (error) ? <tr><td colSpan={4}><i>Problem getting results: {error}</i></td></tr> :
+        (!searchPage || searchPage.items.length === 0) ? <tr><td colSpan={4}><i>No results found</i></td></tr> : searchPage.items.map((searchResult, idx) =>
           <SearchResult key={idx} meetingEvent={searchResult.meeting_event} meetingId={searchResult.meeting_id}/>
         )}
-      </tbody>
     </Table>
 };
 

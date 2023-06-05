@@ -13,9 +13,10 @@ const MeetingList = () => {
   const accessToken = useGetToken();
   const meetingsPage = useSelector((state) => state.meetings.page);
   const meetingsPageNumber = useSelector((state) => state.meetings.pageNumber);
-  const isLoading = useSelector((state) => state.meetings.isLoading);
   const fromDate = useSelector((state) => state.dateRange.fromDate);
   const toDate = useSelector((state) => state.dateRange.toDate);
+  const isLoading = useSelector((state) => state.meetings.isLoading);
+  const error = useSelector((state) => state.meetings.error);
   const pageSize = 10;
 
   useEffect(() => {
@@ -30,8 +31,9 @@ const MeetingList = () => {
     }
   }, [dispatch, fromDate, toDate, meetingsPageNumber, accessToken]);
 
+  console.log(error);
 
-  return (isLoading || !meetingsPage) ? <FadeLoader/> :
+  return (isLoading) ? <FadeLoader/> :
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -47,7 +49,8 @@ const MeetingList = () => {
         </tr>
       </thead>
       <tbody>
-      { meetingsPage.items.length === 0 ? <tr><td colSpan={3}><i>No meetings</i></td></tr> : meetingsPage.items.map((meeting, idx) =>
+      { (error) ? <tr><td colSpan={3}><i>Error getting meetings: {error}</i></td></tr> :
+        (!meetingsPage || meetingsPage.items.length === 0) ? <tr><td colSpan={3}><i>No meetings</i></td></tr> : meetingsPage.items.map((meeting, idx) =>
         <tr key={idx}>
           <td>
             <MeetingRoomName roomName={meeting.room_name}/>
