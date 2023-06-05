@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import commonRequestParameters from '../app/commonRequestParameters';
 import {FadeLoader} from 'react-spinners';
 import useGetToken from '../hooks/useGetToken';
-import {setAreMeetingsLoading, setMeetingPage} from '../redux/meetingsSlice';
 import {Table} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {BsFillArrowRightCircleFill} from 'react-icons/bs';
 import MeetingRoomName from './MeetingRoomName';
+import {fetchMeetings} from "../redux/meetingsSlice";
 
 const MeetingList = () => {
   const dispatch = useDispatch();
@@ -21,33 +20,13 @@ const MeetingList = () => {
 
   useEffect(() => {
     if (accessToken) {
-      dispatch(setAreMeetingsLoading(true));
-      const fetchUrl ='/api/meetings?' + commonRequestParameters(meetingsPageNumber, pageSize, fromDate, toDate);
-      fetch(fetchUrl, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-        .then(response => {
-            if (response.ok) {
-              return response;
-            } else {
-              const error = new Error(`Error ${response.status}: ${response.statusText}`);
-              error.response = response;
-              throw error;
-            }
-          },
-          error => {
-            throw error;
-          })
-        .then(response => response.json())
-        .then(response => {
-          dispatch(setMeetingPage(response));
-          dispatch(setAreMeetingsLoading(false));
-        })
-        .catch(error => {
-          console.log("load meetings", error.message);
-        });
+      dispatch(fetchMeetings({
+        pageNumber: meetingsPageNumber,
+        pageSize: pageSize,
+        fromDate: fromDate,
+        toDate: toDate,
+        token: accessToken,
+      }));
     }
   }, [dispatch, fromDate, toDate, meetingsPageNumber, accessToken]);
 

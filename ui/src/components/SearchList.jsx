@@ -2,8 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import useGetToken from '../hooks/useGetToken';
 import {FadeLoader} from 'react-spinners';
-import {setIsSearchLoading, setSearchPage} from '../redux/searchSlice';
-import commonRequestParameters from '../app/commonRequestParameters';
+import {searchMeetings} from '../redux/searchSlice';
 import {Table} from 'react-bootstrap';
 import SearchResult from './SearchResult';
 
@@ -20,36 +19,14 @@ const SearchList = () => {
 
   useEffect(() => {
     if (accessToken) {
-      dispatch(setIsSearchLoading(true));
-      const fetchUrl = '/api/meetingEvent?' + commonRequestParameters(searchPageNumber, pageSize, fromDate, toDate) +
-        '&' + new URLSearchParams({
-          query: query
-        });
-      fetch(fetchUrl, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-        .then(response => {
-            if (response.ok) {
-              return response;
-            } else {
-              const error = new Error(`Error ${response.status}: ${response.statusText}`);
-              error.response = response;
-              throw error;
-            }
-          },
-          error => {
-            throw error;
-          })
-        .then(response => response.json())
-        .then(response => {
-          dispatch(setSearchPage(response));
-          dispatch(setIsSearchLoading(false));
-        })
-        .catch(error => {
-          console.log("search meetings", error.message);
-        });
+      dispatch(searchMeetings({
+        pageNumber: searchPageNumber,
+        pageSize: pageSize,
+        fromDate: fromDate,
+        toDate: toDate,
+        query: query,
+        token: accessToken,
+      }));
     }
   }, [dispatch, accessToken, fromDate, toDate, query, searchPageNumber]);
   return (isLoading || !searchPage) ? <FadeLoader/> :
