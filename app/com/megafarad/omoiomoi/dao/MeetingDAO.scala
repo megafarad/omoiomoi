@@ -195,8 +195,12 @@ class MeetingDAO @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit v
     Instant.from(zonedDateTime)
   }
 
-  def getMeetingsByParticipantEmail(email: String, fromDate: Option[LocalDate], toDate: Option[LocalDate],
-                                    timeZone: Option[ZoneId], page: Int = 0, pageSize: Int = 10): Future[Page[Meeting]] = {
+  def getMeetingsByParticipantEmail(email: String,
+                                    fromDate: Option[LocalDate],
+                                    toDate: Option[LocalDate],
+                                    timeZone: Option[ZoneId],
+                                    page: Int = 0,
+                                    pageSize: Int = 10): Future[Page[MeetingListing]] = {
     val offset = pageSize * page
 
     val matchingEvents = fullQuery.filter {
@@ -225,20 +229,10 @@ class MeetingDAO @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit v
     for {
       totalMeetings <- db.run(meetingsQuery.length.result)
       meetingRecords <- db.run(meetingPageQuery.result)
-      meetings <- Future.sequence(meetingRecords.map {
-        meetingRecord =>
-          val meetingEventsQuery = fullQuery.filter {
-            case ((meeting, _), _) => meeting.id === meetingRecord.id
-          }.sortBy(_._1._2.timestamp)
-          db.run(meetingEventsQuery.result).map {
-            meetingEventRecords =>
-              val meetingEvents: Seq[MeetingEvent] = extractMeetingEvents(meetingEventRecords)
-              val participants = extractParticipants(meetingEvents)
-              Meeting(id = meetingRecord.id, roomName = meetingRecord.roomName, startTime = meetingRecord.startTime,
-                endTime = meetingRecord.endTime, participants = participants, events = meetingEvents)
-          }
-      })
-    } yield Page[Meeting](meetings, page, offset, totalMeetings)
+    } yield {
+      val listings = meetingRecords.map(r => MeetingListing(r.id, r.roomName, r.startTime))
+      Page[MeetingListing](listings, page, offset, totalMeetings)
+    }
   }
 
   private def extractParticipants(meetingEvents: Seq[MeetingEvent]): Seq[Participant] = {

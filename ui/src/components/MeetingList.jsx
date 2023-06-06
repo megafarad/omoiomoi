@@ -31,7 +31,6 @@ const MeetingList = () => {
     }
   }, [dispatch, fromDate, toDate, meetingsPageNumber, accessToken]);
 
-  console.log(error);
 
   return (isLoading) ? <FadeLoader/> :
     <Table striped bordered hover>

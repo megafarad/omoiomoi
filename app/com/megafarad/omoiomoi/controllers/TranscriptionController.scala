@@ -1,11 +1,11 @@
 package com.megafarad.omoiomoi.controllers
 
-
 import com.megafarad.omoiomoi.auth.AuthAction
 import com.megafarad.omoiomoi.dao.MeetingDAO
 import com.megafarad.omoiomoi.model.Meeting._
+import com.megafarad.omoiomoi.model.MeetingListing._
 import com.megafarad.omoiomoi.model.MeetingEvent._
-import com.megafarad.omoiomoi.model.{Meeting, MeetingEvent, Page, SearchResult}
+import com.megafarad.omoiomoi.model.{Meeting, MeetingEvent, MeetingListing, Page, SearchResult}
 import play.api._
 import play.api.cache.AsyncCacheApi
 import play.api.libs.json.Json
@@ -70,7 +70,7 @@ class TranscriptionController @Inject()(meetingDAO: MeetingDAO,
     for {
       emailOrException <- getUserEmail(request.token)
       meetings <- emailOrException match {
-        case Left(_) => Future.successful(Page[Meeting](Nil, 0, 0, 0))
+        case Left(_) => Future.successful(Page[MeetingListing](Nil, 0, 0, 0))
         case Right(email) => meetingDAO.getMeetingsByParticipantEmail(email, fromDate,
           toDate.map(_.plusDays(1)), timeZone, page, pageSize)
       }
@@ -100,7 +100,12 @@ class TranscriptionController @Inject()(meetingDAO: MeetingDAO,
     }
   }
 
-  def searchMeetings(query: String, page: Int, pageSize: Int, fromDate: Option[java.time.LocalDate], toDate: Option[java.time.LocalDate], timeZone: Option[java.time.ZoneId]): Action[AnyContent] = authAction.async { implicit request =>
+  def searchMeetings(query: String,
+                     page: Int,
+                     pageSize: Int,
+                     fromDate: Option[java.time.LocalDate],
+                     toDate: Option[java.time.LocalDate],
+                     timeZone: Option[java.time.ZoneId]): Action[AnyContent] = authAction.async { implicit request =>
     for {
       emailOrException <- getUserEmail(request.token)
       queryResults <- emailOrException match {
