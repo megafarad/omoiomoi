@@ -13,7 +13,7 @@ entry:
 org.jitsi.jigasi.transcription.SEND_JSON_REMOTE_URLS=https://transcripts.omoiomoi.org/api/meetingEvent
 ```
 
-After configuration, you will then see transcribed meetings in the OmoiOmoi UI.
+After configuration and following meetings, you will then see transcribed meetings in the OmoiOmoi UI.
 
 # Development
 
