@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useDeferredValue, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import useGetToken from '../hooks/useGetToken';
 import {FadeLoader} from 'react-spinners';
@@ -11,6 +11,7 @@ const SearchList = () => {
   const accessToken = useGetToken();
   const searchPage = useSelector((state) => state.search.page);
   const query = useSelector((state) => state.search.query);
+  const deferredQuery = useDeferredValue(query);
   const searchPageNumber = useSelector((state) => state.search.pageNumber);
   const fromDate = useSelector((state) => state.dateRange.fromDate);
   const toDate = useSelector((state) => state.dateRange.toDate);
@@ -25,11 +26,11 @@ const SearchList = () => {
         pageSize: pageSize,
         fromDate: fromDate,
         toDate: toDate,
-        query: query,
+        query: deferredQuery,
         token: accessToken,
       }));
     }
-  }, [dispatch, accessToken, fromDate, toDate, query, searchPageNumber]);
+  }, [dispatch, accessToken, fromDate, toDate, searchPageNumber, deferredQuery]);
   return (isLoading) ? <FadeLoader/> :
     <Table striped bordered hover>
       <thead>
