@@ -2,7 +2,7 @@ import com.typesafe.sbt.packager.docker.DockerChmodType
 
 ThisBuild / scalaVersion := "2.13.10"
 
-ThisBuild / version := "0.2.0-SNAPSHOT"
+ThisBuild / version := "0.3.0-SNAPSHOT"
 
 Docker / daemonUserUid  := None
 Docker / daemonUser := "daemon"
@@ -22,13 +22,13 @@ lazy val root = (project in file("."))
       guice,
       ws,
       caffeine,
-      "com.typesafe.play" %% "play-slick" % "5.2.0",
-      "com.typesafe.play" %% "play-slick-evolutions" % "5.2.0",
-      "org.postgresql" % "postgresql" % "42.5.4",
+      "org.playframework" %% "play-slick" % "6.0.0",
+      "org.playframework" %% "play-slick-evolutions" % "6.0.0",
+      "org.postgresql" % "postgresql" % "42.7.1",
       "com.auth0" % "jwks-rsa" % "0.20.0",
-      "com.github.jwt-scala" %% "jwt-core" % "9.2.0",
-      "com.github.jwt-scala" %% "jwt-play" % "9.2.0",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
+      "com.github.jwt-scala" %% "jwt-core" % "10.0.0",
+      "com.github.jwt-scala" %% "jwt-play" % "10.0.0",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
     ),
     routesImport += "com.megafarad.omoiomoi.binders.CustomBinders._"
   )
