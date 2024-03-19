@@ -5,7 +5,7 @@ interface for viewing and searching transcripts, as well as storage in a databas
 
 # Usage
 
-This project is deployed to https://transcripts.omoiomi.org. You are welcome to sign up for an account there. At first, 
+This project is deployed to https://transcripts.omoiomoi.org. You are welcome to sign up for an account there. At first, 
 you will not see meetings. You will want to configure [jigasi](https://github.com/jitsi/jigasi) with the following 
 entry:
 
