@@ -3,6 +3,8 @@ package com.megafarad.omoiomoi.dao
 import com.megafarad.omoiomoi.model._
 import com.megafarad.omoiomoi.model.MeetingEvent._
 import play.api.db.slick._
+import MyPostgresProfile.api._
+import com.github.tminglei.slickpg.TsVector
 import play.api.libs.json.Json
 import slick.jdbc.JdbcProfile
 
@@ -17,7 +19,6 @@ class MeetingDAO @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit v
   private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
-  import profile.api._
 
   private class MeetingTable(tag: Tag) extends Table[MeetingRecord](tag, "meeting") {
     def id = column[UUID]("id", O.PrimaryKey, O.SqlType("UUID"))
@@ -47,6 +48,7 @@ class MeetingDAO @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit v
     def participantRecordId = column[Option[String]]("participant_record_id", O.SqlType("VARCHAR(8)"))
     def timestamp = column[Instant]("timestamp")
     def transcribedText = column[Option[String]]("transcribed_text", O.SqlType("text"))
+    def searchField = column[TsVector]("search_field")
     def json = column[String]("json", O.SqlType("text"))
 
     override def * = (id, recordType, meetingRecordId, participantRecordId, timestamp, transcribedText, json) <>
@@ -241,7 +243,7 @@ class MeetingDAO @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit v
     }.distinct
   }
 
-  def searchMeetingEvents(email: String, search: String, fromDate: Option[LocalDate], toDate: Option[LocalDate],
+  def searchMeetingEvents(email: String, query: String, fromDate: Option[LocalDate], toDate: Option[LocalDate],
                           timeZone: Option[ZoneId], page: Int = 0, pageSize: Int = 10): Future[Page[SearchResult]] = {
     val offset = pageSize * page
 
@@ -255,7 +257,7 @@ class MeetingDAO @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit v
 
     val distinctMeetingsQuery = getDistinctMeetings(matchingEventsQuery)
     val meetingEventSearchQuery = distinctMeetingsQuery.join(meetingEventTable).on(_.id === _.meetingRecordId).filter {
-      case (_, meetingEvent) => meetingEvent.transcribedText.toLowerCase like s"%${search.toLowerCase}%"
+      case (_, meetingEvent) => meetingEvent.searchField @@ webSearchToTsQuery(query)
     }
     val meetingEventFromDateQuery = fromInstant match {
       case Some(value) => meetingEventSearchQuery.filter {
