@@ -3,18 +3,6 @@
 A solution for storing and viewing transcripts from [Jitsi Meet](https://github.com/jitsi/jitsi-meet). Provides an 
 interface for viewing and searching transcripts, as well as storage in a database (Postgres).
 
-# Usage
-
-This project is deployed to https://transcripts.omoiomoi.org. You are welcome to sign up for an account there. At first, 
-you will not see meetings. You will want to configure [jigasi](https://github.com/jitsi/jigasi) with the following 
-entry:
-
-```
-org.jitsi.jigasi.transcription.SEND_JSON_REMOTE_URLS=https://transcripts.omoiomoi.org/api/meetingEvent
-```
-
-After configuration and following meetings, you will then see transcribed meetings in the OmoiOmoi UI.
-
 # Development
 
 ## Tech Stack
